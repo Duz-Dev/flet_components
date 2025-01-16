@@ -8,7 +8,7 @@ content = [] #?Contenido de la base
 content_width = 600
 content_height = 800    
 
-task = ft.Container(
+base = ft.Container(
     content=
         ft.Column(
             controls=[

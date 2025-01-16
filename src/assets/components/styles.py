@@ -5,7 +5,7 @@ class FontSize():
     h2_size = 28
     h3_size = 20
     h4_size = 16.25
-    normal_font_size = 16.05
+    normal_font_size = 18
     small_font_size: 14.78
 
 class Colors():
@@ -16,3 +16,5 @@ class Colors():
     color_C = "#474b4f"
     color_D = "#54d75d"
     color_E = "#d1ca4b"
+
+#TODO: Cambiar paleta de colores y cambiar tamaño de fuentes
