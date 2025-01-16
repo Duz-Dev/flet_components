@@ -16,5 +16,8 @@ class Colors():
     color_C = "#474b4f"
     color_D = "#54d75d"
     color_E = "#d1ca4b"
+    color_state_init = "#e7b94c"
+    color_state_progress = "#4dabf7"
+    color_state_finish = "green"
 
 #TODO: Cambiar paleta de colores y cambiar tamaño de fuentes

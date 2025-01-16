@@ -4,11 +4,11 @@ from ..styles import Colors, FontSize
 def state_colors(state):
     match state:
         case 1:
-            cicle_status.bgcolor = Colors.color_E
+            cicle_status.border = ft.border.all(2.25, Colors.color_state_init)
         case 2:
-            cicle_status.bgcolor = Colors.color_E
+            cicle_status.border = ft.border.all(2.25, Colors.color_state_progress)
         case 3:
-            cicle_status.bgcolor = Colors.color_E
+            cicle_status.border = ft.border.all(2.25, Colors.color_state_finish)
     cicle_status.update()
 
 cicle_status = ft.Container(
@@ -29,6 +29,24 @@ state = ft.Container(
     )
 )
 
-state_bar = ft.ProgressBar(value=20)
+#Recuerda que la barra de progreso avanza en base a la cantidad de checklist = true
 
-#TODO: Progress bar del estado pendiente.
+
+progress_bar = ft.ProgressBar(value=0, bgcolor=Colors.color_C)
+
+def state_progress(n_sub_task:int, complete_sub_task: int):
+    """Cambia el color y el progreso en base a la cantidad de subtareas / cantidad de sub_tareas completadas.
+
+    Args:
+        n_sub_task (int): cantidad de sub_tareas
+        complete_sub_task (int): cantidad de sub_tareas completadas
+    """
+    res = complete_sub_task / n_sub_task
+    progress_bar.value = res
+    if  0 > res < .9:
+        progress_bar.color = Colors.color_state_progress
+    if res == 1:
+        progress_bar.color = Colors.color_state_finish
+    progress_bar.update()
+
+
