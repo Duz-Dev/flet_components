@@ -4,7 +4,6 @@ import assets.components as fc
 
 def main(page: ft.Page) -> None:
     page.bgcolor = fc.styles.Colors.color_primary
-    page.scroll = True
     page.add(fc.task)
 
 

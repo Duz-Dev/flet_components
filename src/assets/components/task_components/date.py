@@ -1,21 +1,17 @@
 import flet as ft
 from ..styles import Colors, FontSize
 
-text_const = ft.Text(
-    value="Fecha:",
-    size=FontSize.normal_font_size,
-    weight=ft.FontWeight.W_600
-    
-)
 
-text_date = ft.Text(
-    value="DD - MM - YYYY",
-    size=FontSize.normal_font_size,
-    weight=ft.FontWeight.W_600
-)
-
-date = ft.Container(
-    content=ft.Row(
-        controls=[text_const,text_date]
-    ),
-)
+class Date(ft.Container):
+    def __init__(self, date: str = "DD - MM - YYYY"):
+        super().__init__()
+        self.date = date
+        self.text_const = ft.Text(
+            value="Fecha:", size=FontSize.normal_font_size, weight=ft.FontWeight.W_600
+        )
+        self.text_date = ft.Text(
+            value=date,
+            size=FontSize.normal_font_size,
+            weight=ft.FontWeight.W_600,
+        )
+        self.content = ft.Row(controls=[self.text_const, self.text_date])

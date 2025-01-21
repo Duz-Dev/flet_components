@@ -8,7 +8,6 @@ class TitleInput(ft.Row):
         self.checkbox = ft.Container(
             content=ft.Checkbox(
                 scale=1.5,
-                value=True,
                 check_color=ft.Colors.WHITE,
                 fill_color={
                     ft.ControlState.SELECTED: Colors.color_B,
