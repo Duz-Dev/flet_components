@@ -3,11 +3,18 @@ from ..styles import Colors
 
 
 class Base(ft.Container):
-    def __init__(self, controls=[], padding=None, close_function=None):
+    def __init__(
+        self,
+        controls=[],
+        padding=None,
+        close_function=None,
+        width: int = 600,
+        height: int = 800,
+    ):
         self.controls = controls
         super().__init__()  # Llama a el constructor de la clase ft.Container, de esta forma puedo acceder y manipular sus elementos.
-        self.content_width = 600
-        self.content_height = 800
+        self.content_width = width
+        self.content_height = height
         self.__padding = padding
         self.close = close_function
         self.content = ft.Column(
