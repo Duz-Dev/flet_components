@@ -20,11 +20,21 @@ def main(page: ft.Page) -> None:
                 ],
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             ),
+            ft.Row(
+                [ft.Container(content=tc.ProgressBar(value=0), width=67)],
+                alignment=ft.MainAxisAlignment.END,
+            ),
             text_area,
             sub_list,
+            ft.Row(
+                alignment=ft.MainAxisAlignment.END,
+                controls=[
+                    tc.BtnDelete(text="Eliminar", on_click=lambda e: print("Eliminar"))
+                ],
+            ),
         ],
         close_function=lambda e: page.window.close(),
-        height=page.window.height + 200,
+        height=850,
     )
     page.add(task)
     page.add(

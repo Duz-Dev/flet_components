@@ -42,8 +42,9 @@ class State(ft.Container):
 
 # Recuerda que la barra de progreso avanza en base a la cantidad de checklist = true
 class ProgressBar(ft.ProgressBar):
-    def __init__(self):
-        super().__init__(value=0, bgcolor=Colors.color_C)
+    def __init__(self, value: float = 0):
+        super().__init__(value=0, bgcolor=Colors.color_C, expand=1)
+        self.value = value
 
     def state_progress(self, n_sub_task: int = None, complete_sub_task: int = None):
         """Cambia el color y el progreso en base a la cantidad de subtareas / cantidad de sub_tareas completadas.
