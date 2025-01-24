@@ -9,7 +9,7 @@ class Base(ft.Container):
         padding=None,
         close_function=None,
         width: int = 600,
-        height: int = 800,
+        height: int = 100,
     ):
         self.controls = controls
         super().__init__()  # Llama a el constructor de la clase ft.Container, de esta forma puedo acceder y manipular sus elementos.
@@ -58,6 +58,6 @@ class Base(ft.Container):
                     content=ft.Column(controls),
                 ),
             ],
-            expand=1,
+            # expand=1,
             spacing=0,
         )

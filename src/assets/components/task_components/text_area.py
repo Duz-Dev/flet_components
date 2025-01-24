@@ -3,10 +3,14 @@ from ..styles import Colors, FontSize
 
 
 class TextArea(ft.Row):
-    def __init__(self, text: str = ""):
-        super().__init__()
+    def __init__(
+        self, text: str = "", height: int = 400, widht: int = 400, expand=False
+    ):
+        super().__init__(expand=1)
         self.text_content: str = text
-
+        self.__height = height
+        self.__width = widht
+        self.__expand = expand
         self.content = ft.Column(
             controls=[
                 ft.Text(
@@ -17,13 +21,15 @@ class TextArea(ft.Row):
             ],
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            expand=1,
         )
 
         self.container = ft.Container(
             bgcolor=Colors.color_C,
-            expand=True,
+            expand=self.__expand,
             content=self.content,
-            height=470,
+            width=self.__width,
+            height=self.__height,
             on_hover=self.on_hover,
             # border = ft.border.all(3, ft.Colors.WHITE),
             border_radius=5,
@@ -126,3 +132,12 @@ class TextArea(ft.Row):
 
 
 # text_area = ft.Row(controls=[container])
+
+
+# def maint(page: ft.Page):
+#     page.bgcolor = Colors.color_primary
+#     text_area = TextArea(text="asd")
+#     page.add(text_area)
+
+
+# ft.app(target=maint, assets_dir="assets")

@@ -6,7 +6,11 @@ import assets.components.task_components as tc
 def main(page: ft.Page) -> None:
     page.bgcolor = fc.styles.Colors.color_primary
     page.scroll = True
-    text_area = tc.TextArea(text="asd")
+    text_area = tc.TextArea(
+        text="asd",
+        expand=True,
+        height=200,
+    )
     sub_list = tc.SubTaskList()
 
     task = tc.Base(
@@ -24,7 +28,7 @@ def main(page: ft.Page) -> None:
                 [ft.Container(content=tc.ProgressBar(value=0), width=67)],
                 alignment=ft.MainAxisAlignment.END,
             ),
-            text_area,
+            ft.Row([text_area]),
             sub_list,
             ft.Row(
                 alignment=ft.MainAxisAlignment.END,
@@ -33,10 +37,18 @@ def main(page: ft.Page) -> None:
                 ],
             ),
         ],
-        close_function=lambda e: page.window.close(),
-        height=850,
+        # close_function=lambda e: page.window.close(),
+        close_function=lambda e: page.close(mdl),
+        height=500,
+        width=560,
     )
-    page.add(task)
+
+    mdl = ft.AlertDialog(
+        content=ft.Row(controls=[task], height=600),
+        content_padding=ft.padding.all(0),
+        inset_padding=None,
+    )
+
     page.add(
         ft.FilledButton(
             text="prueba",
@@ -44,7 +56,8 @@ def main(page: ft.Page) -> None:
                 text_area.get_text(),
                 sub_list.count_sub_tasks(),
             ),
-        )
+        ),
+        ft.FilledButton(text="abrir task", on_click=lambda e: page.open(mdl)),
     )
 
 
