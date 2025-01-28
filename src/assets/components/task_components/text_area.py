@@ -4,17 +4,23 @@ from ..styles import Colors, FontSize
 
 class TextArea(ft.Row):
     def __init__(
-        self, text: str = "", height: int = 400, widht: int = 400, expand=False
+        self,
+        text: str = "",
+        placeHolder="Escribe una nota...",
+        height: int = 400,
+        widht: int = 400,
+        expand=False,
     ):
         super().__init__(expand=1)
         self.text_content: str = text
         self.__height = height
         self.__width = widht
         self.__expand = expand
+        self.__placeHolder = placeHolder
         self.content = ft.Column(
             controls=[
                 ft.Text(
-                    value="Escribe una nota...",
+                    value=self.__placeHolder,
                     size=FontSize.normal_font_size,
                     color=ft.Colors.with_opacity(0.6, ft.Colors.WHITE),
                 )
@@ -126,18 +132,3 @@ class TextArea(ft.Row):
             return self.text_content
         else:
             return None
-
-
-# text_area = TextArea()
-
-
-# text_area = ft.Row(controls=[container])
-
-
-# def maint(page: ft.Page):
-#     page.bgcolor = Colors.color_primary
-#     text_area = TextArea(text="asd")
-#     page.add(text_area)
-
-
-# ft.app(target=maint, assets_dir="assets")

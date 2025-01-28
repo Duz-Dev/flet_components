@@ -70,10 +70,14 @@ class State(ft.Container):
 
         Args:
             state (int, opcional): El estado actual del componente. Los valores posibles son:
-                - 1: Estado inicial (color definido en `Colors.color_state_init`).
-                - 2: Estado en progreso (color definido en `Colors.color_state_progress`).
-                - 3: Estado finalizado (color definido en `Colors.color_state_finish`).
-                - Otro: Estado predeterminado (blanco).
+
+            - 1: Estado inicial (color definido en `Colors.color_state_init`).
+
+            - 2: Estado en progreso (color definido en `Colors.color_state_progress`).
+
+            - 3: Estado finalizado (color definido en `Colors.color_state_finish`).
+
+            - Otro: Estado predeterminado (blanco).
         """
         match state:
             case 1:
