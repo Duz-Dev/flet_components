@@ -1,64 +1,37 @@
 import flet as ft
-import assets.components as fc
-import assets.components.task_components as tc
+import assets.components as fc  # estilos globales
+import assets.components.task_components as tc  # componentes de task_components
+
+# import task
 
 
-def main(page: ft.Page) -> None:
-    page.bgcolor = fc.styles.Colors.color_primary
-    page.scroll = True
-    text_area = tc.TextArea(
-        text="asd",
-        expand=True,
-        height=200,
-    )
-    sub_list = tc.SubTaskList()
+def main(page: ft.Page):
+    # page.add(tc.Base(title="practice"))
+    # page.add(
+    #     tc.BtnDelete(
+    #         text="edit",
+    #         on_click=lambda e: print("hola mundo"),
+    #     )
+    # )
+    # page.add(tc.Date("28-12-2002", template="Fecha:"))  # listo
+    # progreso = tc.ProgressBar()
+    # progreso.state_progress(5, 3)
+    # page.add(progreso)
+    # page.add(tc.State())
+    # sub = tc.SubTaskList()
+    # prueba = tc.BtnDelete("prueba", on_click=lambda e: print(sub.count_sub_tasks()))
+    # page.add(sub, prueba)
+    # Crear una instancia de SubTaskList
+    # Crear una instancia de SubTaskList
+    sub_task_list = tc.SubTaskList()
 
-    task = tc.Base(
-        padding=30,
-        controls=[
-            tc.TitleInput(),
-            ft.Row(
-                [
-                    tc.Date(date="10 - 05 - 2025"),
-                    tc.State(),
-                ],
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-            ),
-            ft.Row(
-                [ft.Container(content=tc.ProgressBar(value=0), width=67)],
-                alignment=ft.MainAxisAlignment.END,
-            ),
-            ft.Row([text_area]),
-            sub_list,
-            ft.Row(
-                alignment=ft.MainAxisAlignment.END,
-                controls=[
-                    tc.BtnDelete(text="Eliminar", on_click=lambda e: print("Eliminar"))
-                ],
-            ),
-        ],
-        # close_function=lambda e: page.window.close(),
-        close_function=lambda e: page.close(mdl),
-        height=500,
-        width=560,
-    )
-
-    mdl = ft.AlertDialog(
-        content=ft.Row(controls=[task], height=600),
-        content_padding=ft.padding.all(0),
-        inset_padding=None,
-    )
-
-    page.add(
-        ft.FilledButton(
-            text="prueba",
-            on_click=lambda e: print(
-                text_area.get_text(),
-                sub_list.count_sub_tasks(),
-            ),
-        ),
-        ft.FilledButton(text="abrir task", on_click=lambda e: page.open(mdl)),
-    )
+    # Añadir subtareas externamente
+    sub_task_list.add_subTask("Subtarea 1", True)  # Checkbox marcado
+    sub_task_list.add_subTask("Subtarea 2", False)  # Checkbox sin marcar
+    page.add(sub_task_list)
+    # Añadir subtareas externamente
+    # sub_task_list.did_mount("Subtarea 1", True)  # Checkbox marcado
+    # sub_task_list.did_mount("Subtarea 2", False)  # Checkbox sin marcar
 
 
-ft.app(target=main, assets_dir="assets")
+ft.app(main)

@@ -5,8 +5,9 @@ from ..styles import Colors
 class Base(ft.Container):
     def __init__(
         self,
-        controls=[],
-        padding=None,
+        controls: ft.Control = [],
+        title: str = None,
+        padding: ft.PaddingValue = None,
         close_function=None,
         width: int = 600,
         height: int = 100,
@@ -17,13 +18,14 @@ class Base(ft.Container):
         self.content_height = height
         self.__padding = padding
         self.close = close_function
+        self.title = title
         self.content = ft.Column(
             controls=[
                 # Contenido superior (título y botón de cerrar)
                 ft.Container(
                     content=ft.Row(
                         controls=[
-                            ft.Text(value="task", size=32, weight=ft.FontWeight.BOLD),
+                            ft.Text(value=title, size=32, weight=ft.FontWeight.BOLD),
                             ft.IconButton(
                                 icon=ft.Icons.CLOSE_SHARP,
                                 icon_size=30,
