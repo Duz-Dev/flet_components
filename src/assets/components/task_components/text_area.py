@@ -44,6 +44,8 @@ class TextArea(ft.Row):
         widht: int = 400,
         expand=False,
     ):
+
+        super().__init__(expand=1)
         """
         Inicializa un componente `TextArea`.
 
@@ -55,7 +57,6 @@ class TextArea(ft.Row):
             widht (int, opcional): Anchura del componente en píxeles. Por defecto, 400.
             expand (bool, opcional): Indica si el componente debe expandirse para llenar el espacio disponible. Por defecto, `False`.
         """
-        super().__init__(expand=1)
         self.text_content: str = text
         self.__height = height
         self.__width = widht
