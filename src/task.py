@@ -7,9 +7,11 @@ def main(page: ft.Page) -> None:
     page.bgcolor = fc.styles.Colors.color_primary
     page.scroll = True
     text_area = tc.TextArea(
+        widht=None,
         expand=True,
         height=200,
     )
+
     sub_list = tc.SubTaskList(expand=1)
 
     task = tc.Base(
@@ -28,7 +30,7 @@ def main(page: ft.Page) -> None:
                 [ft.Container(content=tc.ProgressBar(value=0), width=67)],
                 alignment=ft.MainAxisAlignment.END,
             ),
-            ft.Row([text_area]),
+            text_area,
             sub_list,
             ft.Row(
                 alignment=ft.MainAxisAlignment.END,

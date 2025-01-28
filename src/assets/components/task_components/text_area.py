@@ -30,10 +30,14 @@ class TextArea(ft.Row):
                 height=300,
                 width=500
             )
+            texto = textarea.get_text() #Obtiene el texto del control
             page.add(textarea)
+            print(texto)#Salida: Texto Inicial
 
         ft.app(target=main)
         ```
+    ----
+    Observacion. Puedes usar width = None para que el expand = True funcione sin complicaciones. Asi el control se expandera el 100% del ancho del contenedor padre.
     """
 
     def __init__(
@@ -45,7 +49,7 @@ class TextArea(ft.Row):
         expand=False,
     ):
 
-        super().__init__(expand=1)
+        super().__init__()
         """
         Inicializa un componente `TextArea`.
 
