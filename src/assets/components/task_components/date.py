@@ -34,13 +34,35 @@ class Date(ft.Container):
     def __init__(self, date: str = "DD - MM - YYYY", template: str = None):
 
         super().__init__()
-        self.date = date
-        self.text_template: ft.Text = ft.Text(
-            value=template, size=FontSize.normal_font_size, weight=ft.FontWeight.W_600
+        self.__date = date
+        self.__template = template
+
+        self.text_template = ft.Text(
+            value=self.__template,
+            size=FontSize.normal_font_size,
+            weight=ft.FontWeight.W_600,
         )
         self.text_date = ft.Text(
-            value=date,
+            value=self.__date,
             size=FontSize.normal_font_size,
             weight=ft.FontWeight.W_600,
         )
         self.content = ft.Row(controls=[self.text_template, self.text_date])
+
+    @property
+    def date(self):
+        return self.__date
+
+    @date.setter
+    def date(self, date):
+        self.__date = date
+        self.text_date.value = self.__date
+
+    @property
+    def template(self):
+        return self.__template
+
+    @template.setter
+    def template(self, template):
+        self.__template = template
+        self.text_template.value = self.__template

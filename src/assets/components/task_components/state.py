@@ -131,14 +131,17 @@ class ProgressBar(ft.ProgressBar):
             n_sub_task (int): cantidad de sub_tareas
             complete_sub_task (int): cantidad de sub_tareas completadas
         """
+        if n_sub_task == None and complete_sub_task == None:
+            raise Exception("Error: n_sub_task y complete_sub_task son requeridos")
         if n_sub_task < complete_sub_task:
             raise Exception("El valor de <n_sub_task> debe ser mayor.")
 
-        if n_sub_task == None and complete_sub_task == None:
-            print("Error: n_sub_task and complete_sub_task are required")
         res = complete_sub_task / n_sub_task
         self.value = res
-        if 0 > res < 0.9:
+        if 0 < res < 0.5:
+            self.color = Colors.color_state_init
+        if 0.5 <= res < 0.9:
             self.color = Colors.color_state_progress
+
         if res == 1:
             self.color = Colors.color_state_finish

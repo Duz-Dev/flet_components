@@ -3,66 +3,43 @@ import assets.components as fc
 import assets.components.task_components as tc
 
 
-def main(page: ft.Page) -> None:
-    page.bgcolor = fc.styles.Colors.color_primary
-    page.scroll = True
-    text_area = tc.TextArea(
-        widht=None,
-        expand=True,
-        height=200,
-    )
+class Task(tc.Base):
+    def __init__(self, title: str = None, on_click: ft.OptionalEventCallable = None):
+        self.title = title
+        # Componentes
+        self.TextArea = tc.TextArea(widht=None, expand=True, height=200)
+        self.SubTaskList = tc.SubTaskList(expand=1)
+        self.TitleInput = tc.TitleInput()
+        self.Date = tc.Date(date="10 - 05 - 2025", template="fecha:")
+        self.State = tc.State()
+        self.ProgressBar = tc.ProgressBar(value=0)
+        self.BtnDelete = tc.BtnDelete(text="Eliminar")
 
-    sub_list = tc.SubTaskList(expand=1)
+        self.__on_click = on_click
 
-    task = tc.Base(
-        padding=30,
-        title="task",
-        controls=[
-            tc.TitleInput(),
+        self.controls = [
+            self.TitleInput,
             ft.Row(
-                [
-                    tc.Date(date="10 - 05 - 2025"),
-                    tc.State(),
-                ],
+                [self.Date, self.State],
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             ),
             ft.Row(
-                [ft.Container(content=tc.ProgressBar(value=0), width=67)],
+                [ft.Container(content=self.ProgressBar, width=67)],
                 alignment=ft.MainAxisAlignment.END,
             ),
-            text_area,
-            sub_list,
+            self.TextArea,
+            self.SubTaskList,
             ft.Row(
                 alignment=ft.MainAxisAlignment.END,
-                controls=[
-                    tc.BtnDelete(text="Eliminar", on_click=lambda e: print("Eliminar"))
-                ],
+                controls=[self.BtnDelete],
             ),
-        ],
-        # close_function=lambda e: page.window.close(),
-        close_function=lambda e: page.close(mdl),
-        height=500,
-        width=560,
-    )
+        ]
 
-    mdl = ft.AlertDialog(
-        content=ft.Row(
-            controls=[task], height=600
-        ),  # Curisamente es mejor usar row para delimitar el alto de la tarea, de lo contrario se expande toda la pantalla la tarea.
-        content_padding=ft.padding.all(0),
-        inset_padding=None,
-    )
-
-    page.add(
-        ft.FilledButton(
-            text="prueba",
-            on_click=lambda e: print(
-                text_area.get_text(),
-                sub_list.count_sub_tasks(),
-            ),
-        ),
-        ft.FilledButton(text="abrir task", on_click=lambda e: page.open(mdl)),
-    )
-
-
-ft.app(target=main, assets_dir="assets")
+        super().__init__(
+            padding=30,
+            title=self.title,
+            height=600,
+            width=530,
+            controls=self.controls,
+            close_function=self.__on_click,
+        )

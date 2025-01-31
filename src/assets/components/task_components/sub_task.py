@@ -169,6 +169,7 @@ class SubTaskList(ft.Column):
                         ft.ControlState.SELECTED: Colors.color_state_progress,
                     },
                     value=is_completed,
+                    width=12,
                 ),
             ),
             bgcolor=Colors.color_secundary,
