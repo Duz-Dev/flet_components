@@ -190,8 +190,10 @@ class TextArea(ft.Row):
         Esto se usa principalmente después de que el componente se monta.
         """
         if self.__text:
-            text = self.__text
-            self.view_markdown(None, text)
+            self.__text = self.container_input.value
+            # Dado que el input y el texto de entrada del contenedor asi como el markdown comporten contexto (el texto) es necesario indicarle que si el input se ve modificado (especificamente cuando esta vacio) el self.__text sea conciente de que tambien tenga el mismo valor.
+            # De esta forma evito un bug en el cual el view_markdown carga con texto que el input ya no contiene.
+            self.view_markdown(None, self.__text)
 
     def did_mount(self):
         """
