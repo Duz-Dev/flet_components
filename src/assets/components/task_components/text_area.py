@@ -14,8 +14,9 @@ class TextArea(ft.Row):
         text (str): Texto inicial del área (opcional).
         placeHolder (str): Texto mostrado cuando el área está vacía (opcional).
         height (int): Altura del contenedor principal en píxeles (opcional, por defecto 400).
-        width (int): Anchura del contenedor principal en píxeles (opcional, por defecto None).
-        expand (bool): Si el área debe expandirse para ocupar todo el espacio disponible (opcional, por defecto `False`).
+        width (int): Anchura del contenedor principal en píxeles (opcional, por defecto 400).
+        expand (bool): Si el área debe expandirse para ocupar todo el espacio disponible
+                       (opcional, por defecto `False`).
 
     Ejemplo:
         ```python
@@ -29,12 +30,14 @@ class TextArea(ft.Row):
                 height=300,
                 width=500
             )
+            texto = textarea.get_text() #Obtiene el texto del control
             page.add(textarea)
+            print(texto)#Salida: Texto Inicial
 
         ft.app(target=main)
         ```
     ----
-
+    Observacion. Puedes usar width = None para que el expand = True funcione sin complicaciones. Asi el control se expandera el 100% del ancho del contenedor padre.
     """
 
     def __init__(
@@ -42,7 +45,7 @@ class TextArea(ft.Row):
         text: str = "",
         placeHolder="Escribe una nota...",
         height: int = 400,
-        widht: int = None,
+        widht: int = 400,
         expand=False,
     ):
 
@@ -171,6 +174,15 @@ class TextArea(ft.Row):
 
         self.container.update()
 
+    @property
+    def text(self):
+        return self.__text
+
+    @text.setter
+    def text(self, text):
+        self.__text = text
+        self.container_input.value = self.__text
+
     def load_text(self):
         """
         Carga el texto inicial en el componente, si está definido.
@@ -179,7 +191,6 @@ class TextArea(ft.Row):
         """
         if self.__text:
             text = self.__text
-            self.container_input.value = self.__text
             self.view_markdown(None, text)
 
     def did_mount(self):
@@ -189,11 +200,3 @@ class TextArea(ft.Row):
         Carga el texto inicial si está definido.
         """
         self.load_text()
-
-    @property
-    def text(self) -> str:
-        return self.__text
-
-    @text.setter
-    def text(self, text):
-        self.__text = text

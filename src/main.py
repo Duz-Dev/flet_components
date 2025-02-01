@@ -1,7 +1,6 @@
 import flet as ft
 import assets.components as fc
-import task  # prube de una interfaz provicional para modificar el layout de tarea.
-import assets.components.task_components as tc
+import task  # importa una extension del control tc.Base el cual cuenta con todos los demas controles del modulo task_components.
 
 
 def main(page: ft.Page) -> None:
@@ -11,7 +10,14 @@ def main(page: ft.Page) -> None:
     t = task.Task("title", on_close=lambda e: print("hola mundo"))
     t.TitleInput.text = "Lorem"
     t.TitleInput.value = True
-    t.TextArea.text = "lorem"
+    t.TextArea.text = """
+## Tables
+
+|Syntax                                 |Result                               |
+|---------------------------------------|-------------------------------------|
+|`*italic 1*`                           |*italic 1*                           |
+|`_italic 2_`                           | _italic 2_                          |
+"""
     t.Date.date = "30-01-2025"
     t.Date.template = "Date:"
     t.State.state_colors(2)
