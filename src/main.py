@@ -8,16 +8,10 @@ def main(page: ft.Page) -> None:
     page.bgcolor = fc.styles.Colors.color_primary
     page.scroll = True
 
-    t = task.Task("title", on_click=lambda e: print("hola mundo"))
+    t = task.Task("title", on_close=lambda e: print("hola mundo"))
     t.TitleInput.text = "Lorem"
     t.TitleInput.value = True
-    t.TextArea.text_content = """
-## Table
-
-|Syntax                                 |Result                               |
-|---------------------------------------|-------------------------------------|
-|`*italic 1*`                           |*italic 1*                           |
-    """
+    t.TextArea.text = "lorem"
     t.Date.date = "30-01-2025"
     t.Date.template = "Date:"
     t.State.state_colors(2)

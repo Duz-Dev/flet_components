@@ -4,7 +4,15 @@ import assets.components.task_components as tc
 
 
 class Task(tc.Base):
-    def __init__(self, title: str = None, on_click: ft.OptionalEventCallable = None):
+    """
+    modal experimental que contiene todos los controles personalizados del modulo task.
+
+    Args:
+        title (str): Titulo a colocar por encima del modal.
+        on_close (OptionalEventCallable): evento que se ejecuta cuando le das click al boton superior derecho (x).
+    """
+
+    def __init__(self, title: str = None, on_close: ft.OptionalEventCallable = None):
         self.title = title
         # Componentes
         self.TextArea = tc.TextArea(widht=None, expand=True, height=200)
@@ -15,7 +23,7 @@ class Task(tc.Base):
         self.ProgressBar = tc.ProgressBar(value=0)
         self.BtnDelete = tc.BtnDelete(text="Eliminar")
 
-        self.__on_click = on_click
+        self.on_close = on_close
 
         self.controls = [
             self.TitleInput,
@@ -41,5 +49,5 @@ class Task(tc.Base):
             height=600,
             width=530,
             controls=self.controls,
-            close_function=self.__on_click,
+            close_function=self.on_close,
         )

@@ -14,9 +14,8 @@ class TextArea(ft.Row):
         text (str): Texto inicial del área (opcional).
         placeHolder (str): Texto mostrado cuando el área está vacía (opcional).
         height (int): Altura del contenedor principal en píxeles (opcional, por defecto 400).
-        width (int): Anchura del contenedor principal en píxeles (opcional, por defecto 400).
-        expand (bool): Si el área debe expandirse para ocupar todo el espacio disponible
-                       (opcional, por defecto `False`).
+        width (int): Anchura del contenedor principal en píxeles (opcional, por defecto None).
+        expand (bool): Si el área debe expandirse para ocupar todo el espacio disponible (opcional, por defecto `False`).
 
     Ejemplo:
         ```python
@@ -30,14 +29,12 @@ class TextArea(ft.Row):
                 height=300,
                 width=500
             )
-            texto = textarea.get_text() #Obtiene el texto del control
             page.add(textarea)
-            print(texto)#Salida: Texto Inicial
 
         ft.app(target=main)
         ```
     ----
-    Observacion. Puedes usar width = None para que el expand = True funcione sin complicaciones. Asi el control se expandera el 100% del ancho del contenedor padre.
+
     """
 
     def __init__(
@@ -45,7 +42,7 @@ class TextArea(ft.Row):
         text: str = "",
         placeHolder="Escribe una nota...",
         height: int = 400,
-        widht: int = 400,
+        widht: int = None,
         expand=False,
     ):
 
@@ -61,7 +58,7 @@ class TextArea(ft.Row):
             widht (int, opcional): Anchura del componente en píxeles. Por defecto, 400.
             expand (bool, opcional): Indica si el componente debe expandirse para llenar el espacio disponible. Por defecto, `False`.
         """
-        self.text_content: str = text
+        self.__text: str = text
         self.__height = height
         self.__width = widht
         self.__expand = expand
@@ -155,7 +152,7 @@ class TextArea(ft.Row):
         if (
             e.data == "true"  # Hover activo
             and not self.container_input.value  # Sin texto en el input
-            and not self.text_content  # Sin texto por defecto
+            and not self.__text  # Sin texto por defecto
         ):
             self.container.border = ft.border.all(1, ft.Colors.WHITE)
             self.container.content = self.content
@@ -180,8 +177,9 @@ class TextArea(ft.Row):
 
         Esto se usa principalmente después de que el componente se monta.
         """
-        if self.text_content:
-            text = self.text_content
+        if self.__text:
+            text = self.__text
+            self.container_input.value = self.__text
             self.view_markdown(None, text)
 
     def did_mount(self):
@@ -192,17 +190,10 @@ class TextArea(ft.Row):
         """
         self.load_text()
 
-    def get_text(self) -> str | None:
-        """
-        Devuelve el texto actual del componente `TextArea`.
+    @property
+    def text(self) -> str:
+        return self.__text
 
-        Returns:
-            str: El texto actual del componente, ya sea ingresado por el usuario o definido por defecto.
-            None: Si no hay texto definido ni ingresado.
-        """
-        if self.container_input.value:
-            return self.container_input.value
-        elif self.text_content:
-            return self.text_content
-        else:
-            return None
+    @text.setter
+    def text(self, text):
+        self.__text = text
