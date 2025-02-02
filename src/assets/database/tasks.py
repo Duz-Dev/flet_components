@@ -44,7 +44,7 @@ class dbTask:
 
     def add(self, title: str, text: str, state: str, subtask: str = None):
         """
-        Añade los datos a la tabla
+        ### Añade los datos a la tabla
 
         Args:
             title (str): titulo de la tarea

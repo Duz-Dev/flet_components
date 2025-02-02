@@ -1,6 +1,7 @@
 import flet as ft
 import assets.components as fc
 import assets.components.task_components as tc
+from assets.components.styles import Colors
 
 
 class Task(tc.Base):
@@ -18,12 +19,21 @@ class Task(tc.Base):
         self.TextArea = tc.TextArea(widht=None, expand=True, height=200)
         self.SubTaskList = tc.SubTaskList(expand=1)
         self.TitleInput = tc.TitleInput()
-        self.Date = tc.Date(date="10 - 05 - 2025", template="fecha:")
+        self.Date = tc.Date(template="fecha:")
         self.State = tc.State()
         self.ProgressBar = tc.ProgressBar(value=0)
-        self.BtnDelete = tc.BtnDelete(text="Eliminar")
+        self.__BtnDelete = tc.BtnDelete(
+            text="Save task",
+            bgcolor=Colors.color_primary,
+            border=ft.border.all(2, color=Colors.color_C),
+            bgcolor_hover=Colors.color_secundary,
+        )
 
         self.on_close = on_close
+        self.__row3 = ft.Row(
+            alignment=ft.MainAxisAlignment.END,
+            controls=[self.__BtnDelete],
+        )
 
         self.controls = [
             self.TitleInput,
@@ -37,10 +47,7 @@ class Task(tc.Base):
             ),
             self.TextArea,
             self.SubTaskList,
-            ft.Row(
-                alignment=ft.MainAxisAlignment.END,
-                controls=[self.BtnDelete],
-            ),
+            self.__row3,
         ]
 
         super().__init__(
@@ -51,3 +58,13 @@ class Task(tc.Base):
             controls=self.controls,
             close_function=self.on_close,
         )
+
+    @property
+    def BtnDelete(self):
+        self.__BtnDelete = self.__row3.controls[0]
+        return self.__BtnDelete
+
+    @BtnDelete.setter
+    def BtnDelete(self, BtnDelete):
+        self.__BtnDelete = BtnDelete
+        self.__row3.controls[0] = self.__BtnDelete

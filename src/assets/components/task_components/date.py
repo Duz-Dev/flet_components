@@ -1,5 +1,8 @@
 import flet as ft
 from ..styles import Colors, FontSize
+from datetime import date
+
+today = date.today().strftime("%d-%m-%Y")
 
 
 class Date(ft.Container):
@@ -31,7 +34,7 @@ class Date(ft.Container):
     Online docs: (Enlace a documentación personalizada si aplica)
     """
 
-    def __init__(self, date: str = "DD - MM - YYYY", template: str = None):
+    def __init__(self, date: str = today, template: str = None):
 
         super().__init__()
         self.__date = date

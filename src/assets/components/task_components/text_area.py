@@ -176,6 +176,7 @@ class TextArea(ft.Row):
 
     @property
     def text(self):
+        self.__text = self.container_input.value
         return self.__text
 
     @text.setter
