@@ -108,6 +108,7 @@ class TitleInput(ft.Row):
 
     @property  # Esta es la mejor practica para tratar las propiedades/atributos de las clases. De esta forma puedo gestionar mejor cuando se pide una propiedad despues de inicializar una instancia (osea crear un objeto) y a su vez gestionar que devuelve.
     def text(self):  # getter, lo que devuelve la case si se llama a TitleInput.text
+        self.__text = self.text_fild.value
         return self.__text  # variable privada
 
     @text.setter  # setter, lo que ejecuta la clase si se asigna un valor a TitleInput.text
@@ -119,6 +120,7 @@ class TitleInput(ft.Row):
 
     @property
     def value(self):
+        self.__value = self.checkbox.content.value
         return self.__value
 
     @value.setter

@@ -5,7 +5,7 @@ def open_conn():
     """Abre la conexión a la base de datos."""
     try:
         conn = p2.connect(
-            user="postgres", password="admin", port="5432", database="task_db"
+            user="postgres", password="admin", port="5432", database="manager_task"
         )
         return conn
     except p2.Error as e:
@@ -51,47 +51,3 @@ def execute_curs(sentencia: str, params=None) -> list[tuple] | None:
     finally:
         if conn:
             conn.close()
-
-
-def add_task(title: str, content: str):
-    execute = "INSERT INTO todo(title, content) VALUES(%s, %s)"
-    execute_curs(execute, (title, content))
-    print("tarea añadida")
-
-
-def read_task(id: int) -> tuple:
-    """Busca una tarea con el `id` ingresado
-
-    Args:
-        id (int): Id de el numero a buscar
-
-    Returns:
-        tuple: (id , title , content)
-    """
-    execute = "SELECT * FROM todo WHERE id = %s"
-    read = execute_curs(execute, (id,))[0]
-    return read
-
-
-def last_id():
-    # execute = "SELECT currval('todo_id_seq')"
-    execute = "SELECT MAX(id) FROM todo"
-    read = execute_curs(execute)[0][0]
-    return read
-
-
-def exist_id(id):
-    execute = "SELECT EXISTS (SELECT 1 FROM todo WHERE id = %s)"
-    read = execute_curs(execute, (id,))[0][0]
-    return read
-
-
-def update_task(id: int, title, content):
-    execute = "UPDATE todo SET title = %s, content = %s WHERE id = %s"
-    execute_curs(execute, (title, content, id))
-
-
-def all_tasks():
-    execute = "SELECT * FROM todo ORDER BY id ASC"
-    read = execute_curs(execute)
-    return read
