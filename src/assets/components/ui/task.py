@@ -13,8 +13,10 @@ class Task(tc.Base):
         on_close (OptionalEventCallable): evento que se ejecuta cuando le das click al boton superior derecho (x).
     """
 
-    def __init__(self, title: str = None, on_close: ft.OptionalEventCallable = None):
-        self.title = title
+    def __init__(
+        self, title: str = None, on_close: ft.OptionalEventCallable = None, data=None
+    ):
+        self.__data = data
         # Componentes
         self.TextArea = tc.TextArea(widht=None, expand=True, height=200)
         self.SubTaskList = tc.SubTaskList(expand=1)
@@ -27,6 +29,7 @@ class Task(tc.Base):
             bgcolor=Colors.color_primary,
             border=ft.border.all(2, color=Colors.color_C),
             bgcolor_hover=Colors.color_secundary,
+            meta=self.__data,
         )
 
         self.on_close = on_close
@@ -52,12 +55,12 @@ class Task(tc.Base):
 
         super().__init__(
             padding=30,
-            title=self.title,
             height=600,
             width=530,
             controls=self.controls,
             close_function=self.on_close,
         )
+        self.title = title
 
     @property
     def BtnDelete(self):
@@ -68,3 +71,13 @@ class Task(tc.Base):
     def BtnDelete(self, BtnDelete):
         self.__BtnDelete = BtnDelete
         self.__row3.controls[0] = self.__BtnDelete
+
+    @property
+    def data(self):
+        self.__data = self.__BtnDelete.data
+        return self.__data
+
+    @data.setter
+    def data(self, data):
+        self.__data = data
+        self.__BtnDelete.data = self.__data

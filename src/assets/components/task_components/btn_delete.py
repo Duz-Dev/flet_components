@@ -15,7 +15,12 @@ class BtnDelete(ft.Container):
         height: int = None,
         border: ft.border = ft.border.all(2, "red"),
         border_radius: ft.border_radius = 5,
+        meta=None,
     ):
+        """
+
+        meta = data
+        """
         super().__init__()
         self.__text = text
         self.bgcolor = bgcolor
@@ -23,11 +28,12 @@ class BtnDelete(ft.Container):
         self.__padding = padding
         self.width = widht
         self.height = height
-        self.__on_click = click
-        if not text:
-            self.__text = " "
+        self.__click = click
+        self.__meta = meta
+        self.border = border
+        self.border_radius = border_radius
 
-        self.content = ft.ElevatedButton(
+        self.__btn = ft.ElevatedButton(
             bgcolor={
                 ft.ControlState.DEFAULT: self.bgcolor,
                 ft.ControlState.HOVERED: self.bgcolor_hover,
@@ -40,12 +46,15 @@ class BtnDelete(ft.Container):
                 shape=ft.RoundedRectangleBorder(radius=0),
                 padding=self.__padding,
             ),
-            on_click=self.__on_click,
+            on_click=self.__click,
             height=self.height,
             width=self.width,
+            data=self.__meta,
         )
-        self.border = border
-        self.border_radius = border_radius
+        self.content = self.__btn
+
+        if not text:
+            self.__text = " "
 
     @property
     def text(self):
@@ -58,9 +67,19 @@ class BtnDelete(ft.Container):
 
     @property
     def click(self):
-        return self.__on_click
+        return self.__click
 
     @click.setter
-    def click(self, on_click):
-        self.__on_click = on_click
-        self.content.on_click = self.__on_click
+    def click(self, click):
+        self.__click = click
+        self.__btn.on_click = self.__click
+
+    @property
+    def meta(self):
+        self.__meta = self.__btn.data
+        return self.__meta
+
+    @meta.setter
+    def meta(self, meta):
+        self.__meta = meta
+        self.__btn.data = self.__meta

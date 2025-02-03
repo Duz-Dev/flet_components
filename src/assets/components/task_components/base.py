@@ -73,7 +73,7 @@ class Base(ft.Container):
         self.content_height = height
         self.__padding = padding
         self.close = close_function
-        self.title = title
+        self.__title = title
         self.expand = expand
 
         # Configuración del contenido principal
@@ -83,7 +83,9 @@ class Base(ft.Container):
                 ft.Container(
                     content=ft.Row(
                         controls=[
-                            ft.Text(value=title, size=32, weight=ft.FontWeight.BOLD),
+                            ft.Text(
+                                value=self.__title, size=32, weight=ft.FontWeight.BOLD
+                            ),
                             ft.IconButton(
                                 icon=ft.Icons.CLOSE_SHARP,
                                 icon_size=30,
@@ -120,3 +122,38 @@ class Base(ft.Container):
             ],
             spacing=0,
         )
+
+    @property
+    def title(self):
+        self.__title = self.content.controls[0].content.controls[0].value
+        return self.__title
+
+    @title.setter
+    def title(self, title):
+        self.__title = title
+        self.content.controls[0].content.controls[0].value = self.__title
+
+
+# def main(page: ft.Page):
+#     base = Base()
+
+#     def buscar(e):
+#         base.title = "lorem"
+#         page.update()
+#         print(base.title)
+
+#     base.title = "pablos"
+#     print(base.title)
+#     btn = ft.FilledButton("text")
+#     btn.on_click = buscar
+#     page.add(base, btn)
+
+
+# ft.app(main)
+""" 
+self.content = ft.Column(
+            controls=[
+                # Contenedor superior (cabecera con título y botón de cerrar)
+                ft.Container(
+                    content=ft.Row(
+                        controls"""

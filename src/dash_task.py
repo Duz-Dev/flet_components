@@ -16,37 +16,43 @@ def main(page: ft.Page):
     id_input = tc.TitleInput(placeHolder="Ingresa el id de la tarea a buscar")
 
     def buscar_tarea(e):
-        id = int(id_input.text)
-        datos = db.read(id)
-        if datos:
-            load_task(*datos)
-        else:
+        def open_banner(e=None):
+            page.open(banner)
+            for i in range(4):
+                time.sleep(1)
+            close_banner()
 
-            def open_banner(e=None):
-                page.open(banner)
-                for i in range(4):
-                    time.sleep(1)
-                close_banner()
+        def close_banner(e=None):
+            page.close(banner)
 
-            def close_banner(e=None):
-                page.close(banner)
+        banner = ft.Banner(
+            bgcolor=ft.Colors.AMBER_100,
+            leading=ft.Icon(ft.Icons.WARNING_AMBER_ROUNDED, color=ft.Colors.AMBER),
+            content=ft.Text(
+                "Aviso. Parece que no existe el dato que has buscado en nuestra base de datos.",
+                color=ft.Colors.BLACK,
+            ),
+            actions=[
+                ft.TextButton(
+                    text="Ok",
+                    on_click=close_banner,
+                    style=ft.ButtonStyle(color=ft.Colors.BLACK),
+                )
+            ],
+        )
 
-            banner = ft.Banner(
-                bgcolor=ft.Colors.AMBER_100,
-                leading=ft.Icon(ft.Icons.WARNING_AMBER_ROUNDED, color=ft.Colors.AMBER),
-                content=ft.Text(
-                    "Aviso. Parece que no existe el dato que has buscado en nuestra base de datos.",
-                    color=ft.Colors.BLACK,
-                ),
-                actions=[
-                    ft.TextButton(
-                        text="Ok",
-                        on_click=close_banner,
-                        style=ft.ButtonStyle(color=ft.Colors.BLACK),
-                    )
-                ],
+        if not id_input.text.isdigit():
+            banner.content.value = (
+                "Aviso. En dato ingresado no es valido, intenta de nuevo."
             )
             open_banner()
+        else:
+            id = int(id_input.text)
+            datos = db.read(id)
+            if datos:
+                load_task(*datos)
+            else:
+                open_banner()
 
     modal_TK = ft.AlertDialog(actions_padding=0)
 
@@ -57,18 +63,34 @@ def main(page: ft.Page):
     def close_modal(e=None):
         page.close(modal_TK)
 
+    TK = task.Task(on_close=close_modal)
+
+    def update_task(e=None):
+        # e.control.data Este dato es el que me trae la informacion del TK.BtnDelete.meta
+        id = int(e.control.data)
+        title = TK.TitleInput.text
+        text = TK.TextArea.text
+        state = "progress"
+
+        db.update(id=id, title=title, text=text, state=state)
+
+    def actualizar_tarea(e=None):
+        update_task(e)
+        close_modal()
+
     # ?Mostar los datos de las tareas mediante un TK
     def load_task(id, title, date, text, state, subtask):
-        TK = task.Task("Tarea", on_close=close_modal)
+        TK.title = "Tarea"
         TK.TitleInput.text = title
         TK.TextArea.text = text
         TK.Date.date = date
         TK.Date.template = "Date:"
-        TK.BtnDelete.text = "close"
-        TK.BtnDelete.click = close_modal
+        TK.BtnDelete.text = "save"
+        TK.BtnDelete.meta = id
+        TK.BtnDelete.click = actualizar_tarea
         open_modal(TK)
 
-    # ?Crear una TK desde cero para añadirla a list_TK
+    # ?Crear una tarea desde cero para añadirla a base de datos
     def crear_tarea(e):
         def add(e):
             db.add(
@@ -84,7 +106,7 @@ def main(page: ft.Page):
             # print("subtask")
             close_modal()
 
-        TK = task.Task("Nueva Tarea", on_close=close_modal)
+        TK.title = "Nueva Tarea"
         TK.BtnDelete.text = "Añadir tarea"
         TK.Date.text_date = ""
         TK.BtnDelete.click = add
@@ -95,6 +117,7 @@ def main(page: ft.Page):
     btn_search = tc.BtnDelete("Buscar", click=buscar_tarea)
     btn_add = tc.BtnDelete("añadir", click=crear_tarea)
     btn_all = tc.BtnDelete("All", click=lambda e: print(db.read()))
+
     # Añado los elementos principales a la pagina
     page.add(
         id_input,

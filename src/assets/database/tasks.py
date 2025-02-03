@@ -62,11 +62,32 @@ class dbTask:
             params = (title, text, state)
         self.__execute(consulta, params)
 
+    def update(self, id: int, title: str, text: str, state: str, subtask: str = None):
+        """
+        ### Actualiza los datos a la tabla
+
+        Args:
+            id (int): ID de la tarea que se decea actualizar.
+            title (str): titulo de la tarea
+            text (str): texto/contenido de la tarea
+            state (str): estado de la tarea (init/progress/finish)
+            subtask (str, optional): las subtareas creadas.
+        """
+        if subtask:
+            consulta = "UPDATE tasks SET title = %s, text = %s, state = %s, subtask = %s WHERE id = %s"
+            params = (title, text, state, subtask, id)
+        else:
+            consulta = (
+                "UPDATE tasks SET title = %s, text = %s, state = %s WHERE id = %s"
+            )
+            params = (title, text, state, id)
+        self.__execute(consulta, params)
+
 
 # task = dbTask()
-
-# data = task.read(1)
-# print(data)
+# print(task.read())
+# task.update(1,"titulo nuevo",text="hola",state="init")
+# print(task.read())
 
 # id = data[0]
 # title = data[1]
