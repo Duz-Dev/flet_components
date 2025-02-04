@@ -11,6 +11,7 @@ db = dbTask()  # creo una instancia de la conexion a la tabla "tasks"
 def main(page: ft.Page):
     # ?Estilos de la pagina
     page.padding = 40
+    page.scroll = "AUTO"
 
     # ?Captura de la tarea buscar
     id_input = tc.TitleInput(placeHolder="Ingresa el id de la tarea a buscar")
@@ -115,10 +116,23 @@ def main(page: ft.Page):
 
         open_modal(TK)
 
+    def all_task(e=None):  # funcion experimental
+        tasks = db.read()
+        for t in tasks:
+            TK = task.Task()
+            TK.title = "Tarea"
+            TK.TitleInput.text = t[1]
+            TK.TextArea.text = t[3]
+            TK.Date.date = t[2]
+            TK.Date.template = "Date:"
+            TK.BtnDelete.text = "save"
+            TK.BtnDelete.click = actualizar_tarea
+            page.add(TK)
+
     # ? Botones de buscar y Añadir tarea nueva
     btn_search = tc.BtnDelete("Buscar", click=buscar_tarea)
     btn_add = tc.BtnDelete("añadir", click=crear_tarea)
-    btn_all = tc.BtnDelete("All", click=lambda e: print(db.read()))
+    btn_all = tc.BtnDelete("All", click=all_task)
 
     # Añado los elementos principales a la pagina
     page.add(
