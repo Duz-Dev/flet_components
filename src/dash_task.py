@@ -92,7 +92,9 @@ def main(page: ft.Page):
 
     # ?Crear una tarea desde cero para añadirla a base de datos
     def crear_tarea(e):
-        def add(e):
+        TK = task.Task(on_close=close_modal)
+
+        def create_TK(e):
             db.add(
                 title=TK.TitleInput.text,
                 text=TK.TextArea.text,
@@ -109,7 +111,7 @@ def main(page: ft.Page):
         TK.title = "Nueva Tarea"
         TK.BtnDelete.text = "Añadir tarea"
         TK.Date.text_date = ""
-        TK.BtnDelete.click = add
+        TK.BtnDelete.click = create_TK
 
         open_modal(TK)
 

@@ -1,8 +1,8 @@
 import flet as ft
 from ..styles import Colors, FontSize
-from datetime import date
+from datetime import date as dateT
 
-today = date.today().strftime("%d-%m-%Y")
+today = dateT.today().strftime("%d-%m-%Y")
 
 
 class Date(ft.Container):
@@ -58,6 +58,8 @@ class Date(ft.Container):
 
     @date.setter
     def date(self, date):
+        if isinstance(date, dateT):
+            date = date.strftime("%d-%m-%Y")
         self.__date = date
         self.text_date.value = self.__date
 
