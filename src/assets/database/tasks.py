@@ -83,9 +83,32 @@ class dbTask:
             params = (title, text, state, id)
         self.__execute(consulta, params)
 
+    def delete(self, id: int = None):
+        """
+        Busca una tarea con el `id` ingresado y la elimina
 
-# task = dbTask()
-# print(task.read())
+        Args:
+            id (int): Id de el numero a buscar.
+        """
+        try:
+            if id:
+                # Previamente verificamos si existe el id en el campo id:
+                consulta = "SELECT EXISTS (SELECT 1 FROM tasks WHERE id = %s)"
+                busqueda = self.__execute(consulta, (id,))[0][0]
+
+                if busqueda:  # si se encontro, entonces:
+                    consulta = "DELETE FROM tasks WHERE id = %s"
+                    self.__execute(consulta, (id,))
+                else:
+                    raise ValueError(f"el dato '{id}' no existe en la base de datos.")
+            else:
+                raise ValueError(
+                    f"Es necesario obligatoriamente ingresar un ID (numero entero positivo.)"
+                )
+        except Exception as e:
+            print("Error:", e)
+
+
 # task.update(1,"titulo nuevo",text="hola",state="init")
 # print(task.read())
 

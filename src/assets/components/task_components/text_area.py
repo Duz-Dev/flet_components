@@ -160,7 +160,7 @@ class TextArea(ft.Row):
             self.container.border = ft.border.all(1, ft.Colors.WHITE)
             self.container.content = self.content
             self.content.controls[0].color = ft.Colors.WHITE
-            self.content.update()
+            # self.content.update() #TODO: CORREGIR BUG
         else:  # Hover desactivado
             self.container.border = ft.border.all(
                 1, ft.Colors.with_opacity(0.6, ft.Colors.WHITE)

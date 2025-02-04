@@ -79,6 +79,34 @@ def main(page: ft.Page):
         update_task(e)
         close_modal()
 
+    def borrar_tarea(e):
+        _id = e.control.data
+        print(_id)
+
+        def delete(e):
+            db.delete(_id)
+            alert2 = ft.AlertDialog(
+                title=ft.Row(
+                    [ft.Text("Tarea eliminada")], alignment=ft.MainAxisAlignment.CENTER
+                )
+            )
+            page.open(alert2)
+            time.sleep(0.8)
+            page.close(alert2)
+
+        def cancel(e):
+            page.close(alert)
+            open_modal(TK)
+
+        alert = ft.AlertDialog(
+            title=ft.Text("¿Estas seguro de esta accion?"),
+            actions=[
+                tc.BtnDelete("Delete", click=delete),
+                tc.BtnFlex("Cancel", click=cancel),
+            ],
+        )
+        page.open(alert)
+
     # ?Mostar los datos de las tareas mediante un TK
     def load_task(id, title, date, text, state, subtask):
         TK.title = "Tarea"
@@ -86,9 +114,16 @@ def main(page: ft.Page):
         TK.TextArea.text = text
         TK.Date.date = date
         TK.Date.template = "Date:"
-        TK.BtnDelete.text = "save"
-        TK.BtnDelete.meta = id
-        TK.BtnDelete.click = actualizar_tarea
+        TK.BtnDelete = ft.Row(
+            [
+                tc.BtnDelete("Delete", meta=id, click=borrar_tarea),
+                tc.BtnFlex("Save", meta=id, click=actualizar_tarea),
+            ],
+            spacing=30,
+        )
+        # TK.BtnDelete.text = "save"
+        # TK.BtnDelete.meta = id
+        # TK.BtnDelete.click = actualizar_tarea
         open_modal(TK)
 
     # ?Crear una tarea desde cero para añadirla a base de datos
